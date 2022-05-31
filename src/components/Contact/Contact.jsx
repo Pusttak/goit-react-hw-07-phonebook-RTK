@@ -1,3 +1,5 @@
+import { connect } from 'react-redux';
+import * as action from '../../redux/actions';
 import PropTypes from 'prop-types';
 import { ContactWrap, Name, Number, ButtonDelete } from './Contact.styled.jsx';
 
@@ -16,7 +18,11 @@ const Contact = ({ name, number, id, onDeleteContact }) => (
   </ContactWrap>
 );
 
-export default Contact;
+const mapDispatchToProps = dispatch => ({
+  onDeleteContact: id => dispatch(action.deleteContact(id)),
+});
+
+export default connect(null, mapDispatchToProps)(Contact);
 
 Contact.propTypes = {
   name: PropTypes.string.isRequired,
