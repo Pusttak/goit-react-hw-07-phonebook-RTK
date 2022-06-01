@@ -1,6 +1,6 @@
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import * as action from '../../redux/filter/filter-actions';
+import * as action from '../../redux/contacts/contacts-actions';
 import { Label, Input } from './Filter.styled.jsx';
 
 const Filter = ({ onChange, filterValue }) => {
