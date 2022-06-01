@@ -1,5 +1,5 @@
 import { connect } from 'react-redux';
-import * as action from '../../redux/actions';
+import * as action from '../../redux/contacts/contacts-actions';
 import PropTypes from 'prop-types';
 import { ContactWrap, Name, Number, ButtonDelete } from './Contact.styled.jsx';
 

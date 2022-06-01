@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { connect } from 'react-redux';
 import { Notify } from 'notiflix/build/notiflix-notify-aio';
 import PropTypes from 'prop-types';
-import * as action from '../../redux/actions';
+import * as action from '../../redux/contacts/contacts-actions';
 import { Form, Label, Input, Button } from './ContactForm.styled.jsx';
 
 const ContactForm = ({ contacts, onSubmit }) => {

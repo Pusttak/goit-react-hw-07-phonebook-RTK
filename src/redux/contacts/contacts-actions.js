@@ -13,8 +13,3 @@ export const deleteContact = contactId => ({
   type: 'contacts/delete',
   payload: contactId,
 });
-
-export const filterContacts = value => ({
-  type: 'filter/valueChange',
-  payload: value,
-});
