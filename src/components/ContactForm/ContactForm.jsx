@@ -57,6 +57,7 @@ const ContactForm = ({ contacts, onSubmit }) => {
           required
           onChange={handleChange}
           value={name}
+          autoComplete="off"
         />
       </Label>
       <Label>
@@ -69,6 +70,7 @@ const ContactForm = ({ contacts, onSubmit }) => {
           required
           onChange={handleChange}
           value={number}
+          autoComplete="off"
         />
       </Label>
       <Button type="submit">Add contact</Button>

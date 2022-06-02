@@ -5,16 +5,6 @@ import Filter from '../Filter';
 import { Container, Title, Subtitle } from './App.styled.jsx';
 
 const App = () => {
-  // const firstLoading = useRef(true);
-
-  // useEffect(() => {
-  //   if (firstLoading.current) {
-  //     firstLoading.current = false;
-  //     return;
-  //   }
-  //   localStorage.setItem('contacts', JSON.stringify(contacts));
-  // }, [contacts]);
-
   return (
     <div
       style={{
