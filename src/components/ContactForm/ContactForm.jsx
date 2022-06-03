@@ -1,13 +1,15 @@
 import React, { useState } from 'react';
-import { connect } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { Notify } from 'notiflix/build/notiflix-notify-aio';
-import PropTypes from 'prop-types';
+import { getContacts } from 'redux/contacts/contacts-selectors.js';
 import * as action from '../../redux/contacts/contacts-actions';
 import { Form, Label, Input, Button } from './ContactForm.styled.jsx';
 
-const ContactForm = ({ contacts, onSubmit }) => {
+const ContactForm = () => {
   const [name, setName] = useState('');
   const [number, setNumber] = useState('');
+  const contacts = useSelector(getContacts);
+  const dispatch = useDispatch();
 
   const handleChange = evt => {
     const { name, value } = evt.target;
@@ -29,7 +31,7 @@ const ContactForm = ({ contacts, onSubmit }) => {
     evt.preventDefault();
     checkContactName(name)
       ? Notify.failure(`${name} is already in contacts`)
-      : onSubmit(name, number) && reset();
+      : dispatch(action.addContact(name, number)) && reset();
   };
 
   const checkContactName = name => {
@@ -78,16 +80,4 @@ const ContactForm = ({ contacts, onSubmit }) => {
   );
 };
 
-const mapStateToProps = state => ({
-  contacts: state.contacts,
-});
-
-const mapDispatchToProps = dispatch => ({
-  onSubmit: (name, number) => dispatch(action.addContact(name, number)),
-});
-
-export default connect(mapStateToProps, mapDispatchToProps)(ContactForm);
-
-ContactForm.propTypes = {
-  onSubmit: PropTypes.func.isRequired,
-};
+export default ContactForm;

@@ -1,11 +1,14 @@
-import PropTypes from 'prop-types';
-import { connect } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import * as action from '../../redux/contacts/contacts-actions';
+import { getFilter } from 'redux/contacts/contacts-selectors';
 import { Label, Input } from './Filter.styled.jsx';
 
-const Filter = ({ onChange, filterValue }) => {
+const Filter = () => {
+  const filterValue = useSelector(getFilter);
+  const dispatch = useDispatch();
+
   const handleChangeFilter = evt => {
-    onChange(evt.target.value);
+    dispatch(action.filterContacts(evt.target.value));
   };
 
   return (
@@ -21,17 +24,4 @@ const Filter = ({ onChange, filterValue }) => {
   );
 };
 
-const mapStateToProps = state => ({
-  filterValue: state.filter,
-});
-
-const mapDispatchToProps = dispatch => ({
-  onChange: value => dispatch(action.filterContacts(value)),
-});
-
-export default connect(mapStateToProps, mapDispatchToProps)(Filter);
-
-Filter.propTypes = {
-  onChange: PropTypes.func.isRequired,
-  filterValue: PropTypes.string.isRequired,
-};
+export default Filter;
