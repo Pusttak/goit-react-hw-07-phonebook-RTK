@@ -1,17 +1,24 @@
-import { useSelector } from 'react-redux';
+import { useEffect } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
 import Contact from 'components/Contact';
 import { getVisibleContacts } from 'redux/contacts/contacts-selectors.js';
+import { getAllContacts } from 'redux/contacts/contacts-operations';
 import { List } from './ContactList.styled.jsx';
 
 const ContactList = () => {
   const contacts = useSelector(getVisibleContacts);
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(getAllContacts());
+  }, [dispatch]);
 
   return (
     <List>
       {contacts?.length ? (
-        contacts.map(({ name, number, id }) => (
+        contacts.map(({ name, phone, id }) => (
           <li key={id}>
-            <Contact name={name} number={number} id={id} />
+            <Contact name={name} phone={phone} id={id} />
           </li>
         ))
       ) : (

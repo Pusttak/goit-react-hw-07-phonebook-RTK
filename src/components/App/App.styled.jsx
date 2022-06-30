@@ -4,7 +4,7 @@ export const Container = styled.div`
   margin: 0 auto;
   margin-top: 10px;
   padding: 10px;
-  width: 370px;
+  width: 500px;
 `;
 
 export const Title = styled.h1`
