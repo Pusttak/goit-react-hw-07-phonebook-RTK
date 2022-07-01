@@ -1,15 +1,14 @@
 import React, { useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
 import { Notify } from 'notiflix/build/notiflix-notify-aio';
-import { addNewContact } from 'redux/contacts/contacts-operations';
-import { allContacts } from 'redux/contacts/contacts-selectors.js';
 import { Form, Label, Input, Button } from './ContactForm.styled.jsx';
+import { useGetContactsQuery, useAddContactsMutation } from 'redux/contacts/contacts-slice.js';
+import { Loading } from 'notiflix';
 
 const ContactForm = () => {
   const [name, setName] = useState('');
   const [phone, setPhone] = useState('');
-  const contacts = useSelector(allContacts);
-  const dispatch = useDispatch();
+  const { data } = useGetContactsQuery();
+  const [addContact, { isLoading }] = useAddContactsMutation();
 
   const handleChange = evt => {
     const { name, value } = evt.target;
@@ -31,12 +30,12 @@ const ContactForm = () => {
     evt.preventDefault();
     checkContactName(name)
       ? Notify.failure(`${name} is already in contacts`)
-      : dispatch(addNewContact({ name, phone })) && reset();
+      : addContact({ name, phone }) && reset();
   };
 
   const checkContactName = name => {
     const normalizedName = name.toLowerCase();
-    return contacts.find(contact => contact.name.toLowerCase() === normalizedName);
+    return data.find(contact => contact.name.toLowerCase() === normalizedName);
   };
 
   const reset = () => {
@@ -72,7 +71,9 @@ const ContactForm = () => {
           autoComplete="off"
         />
       </Label>
-      <Button type="submit">Add contact</Button>
+      <Button type="submit" disabled={isLoading}>
+        {isLoading ? 'Loading...' : 'Add contact'}
+      </Button>
     </Form>
   );
 };

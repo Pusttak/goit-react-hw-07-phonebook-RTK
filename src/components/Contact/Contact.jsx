@@ -1,14 +1,14 @@
 import { useState } from 'react';
-import { useDispatch } from 'react-redux';
 import PropTypes from 'prop-types';
-import { deleteContactById, editContactById } from 'redux/contacts/contacts-operations';
 import { ContactWrap, Name, Number, Button, Form, Input } from './Contact.styled.jsx';
+import { useDeleteContactMutation, useEditContactMutation } from 'redux/contacts/contacts-slice';
 
 const Contact = ({ name, phone, id }) => {
   const [newName, setNewName] = useState(name);
   const [newPhone, setNewPhone] = useState(phone);
   const [isEdit, setIsEdit] = useState(false);
-  const dispatch = useDispatch();
+  const [deleteContact, deleteResult] = useDeleteContactMutation();
+  const [editContact, editResult] = useEditContactMutation();
 
   const handleChange = evt => {
     const { name, value } = evt.target;
@@ -28,7 +28,7 @@ const Contact = ({ name, phone, id }) => {
 
   const onSubmit = evt => {
     evt.preventDefault();
-    dispatch(editContactById({ id, name: newName, phone: newPhone }));
+    editContact({ name: newName, phone: newPhone, id });
     setIsEdit(false);
   };
 
@@ -64,12 +64,12 @@ const Contact = ({ name, phone, id }) => {
         <>
           <Name>{name}</Name>
           <Number>{phone}</Number>
-          <Button type="button" onClick={() => setIsEdit(true)}>
-            Edit
+          <Button type="button" disabled={editResult.isLoading} onClick={() => setIsEdit(true)}>
+            {editResult.isLoading ? 'Loading' : 'Edit'}
           </Button>
         </>
       )}
-      <Button type="button" onClick={() => dispatch(deleteContactById(id))}>
+      <Button type="button" disabled={deleteResult.isLoading} onClick={() => deleteContact(id)}>
         x
       </Button>
     </ContactWrap>
