@@ -2,7 +2,6 @@ import React, { useState } from 'react';
 import { Notify } from 'notiflix/build/notiflix-notify-aio';
 import { Form, Label, Input, Button } from './ContactForm.styled.jsx';
 import { useGetContactsQuery, useAddContactsMutation } from 'redux/contacts/contacts-slice.js';
-import { Loading } from 'notiflix';
 
 const ContactForm = () => {
   const [name, setName] = useState('');
